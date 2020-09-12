@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { ProductsDataSource, ProductsItem } from './products-datasource';
 
 @Component({
@@ -16,9 +17,13 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   dataSource: ProductsDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name','actions'];
+  displayedColumns = ['id', 'name', 'actions'];
+  title: string = '';
+
+  constructor(private router: ActivatedRoute) { }
 
   ngOnInit() {
+    this.router.data.subscribe(res => this.title = res['title']);
     this.dataSource = new ProductsDataSource();
   }
 
